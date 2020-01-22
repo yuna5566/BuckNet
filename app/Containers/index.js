@@ -1,5 +1,5 @@
-export { default as AuthLoading } from '../Containers/AuthLoading'
-export { default as Home } from '../Containers/Home'
-export { default as Login } from '../Containers/Login'
-export { default as Profile } from '../Containers/Profile'
+export * from '../Containers/AuthLoading'
+export * from '../Containers/Home'
+export * from '../Containers/Login'
+export * from '../Containers/Profile'
 

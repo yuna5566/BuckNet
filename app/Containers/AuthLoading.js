@@ -1,7 +1,16 @@
 import React from 'react'
 import {Text, StyleSheet, SafeAreaView, ActivityIndicator} from 'react-native'
 
-const AuthLoading = () => {
+
+
+const AuthLoading = props => {
+    const continueForNow = () => {
+        setTimeout(() => {
+            props.navigation.navigate("Home")
+        }, 2000)
+    }
+
+    continueForNow()
     return(
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>BUCKNET</Text>
@@ -23,4 +32,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AuthLoading
+export { AuthLoading }
+// export default AuthLoading

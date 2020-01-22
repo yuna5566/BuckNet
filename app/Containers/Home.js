@@ -11,4 +11,5 @@ const Home = props => {
     )
 }
 
-export default Home
+export { Home }
+// export default Home

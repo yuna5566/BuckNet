@@ -10,5 +10,5 @@ const Login = props => {
         </View>
     )
 }
-
-export default Login
+export { Login }
+// export default Login

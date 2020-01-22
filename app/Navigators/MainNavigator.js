@@ -1,7 +1,4 @@
-import AuthLoading from '../Containers/AuthLoading'
-import Home from '../Containers/Home'
-import Profile from '../Containers/Profile'
-import Login from '../Containers/Login'
+import { AuthLoading, Home, Login, Profile } from '../Containers/index'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator } from 'react-navigation'
 

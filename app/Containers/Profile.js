@@ -11,4 +11,5 @@ const Profile = props => {
     )
 }
 
-export default Profile
+export { Profile }
+// export default Profile

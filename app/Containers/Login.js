@@ -11,11 +11,11 @@ import {
     TouchableOpacity
 } from 'react-native'
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { HEADER_COLOR } from '../Constants/colors'
 
 const backgroundCover = require('../Assets/img/login_bg.jpg')
 
 const Login = props => {
-
     const signInWithFacebook = () => {
         LoginManager.logInWithPermissions(["public_profile"]).then(
             (result, error) => {
@@ -30,7 +30,11 @@ const Login = props => {
                     console.log("Login success with permissions: " + result.grantedPermissions.toString())
                 }
             }
-        );
+        )
+    }
+
+    const goToHome = () => {
+        props.navigation.navigate("Home")
     }
 
     return(
@@ -39,7 +43,7 @@ const Login = props => {
             <ImageBackground source={backgroundCover} style={styles.backgroundImage}>
             <View style={styles.body_container}>
                 <View style={styles.body_container_wrapper_1}>
-                    <Text style={styles.title}>BUCKNET</Text>
+                    <Text style={styles.title} onPress={goToHome}>BUCKNET</Text>
                 </View>
                 <View style={styles.body_container_wrapper_2}>
                     <View style={styles.form_container}>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: Dimensions.get('window').height * .05,
-        backgroundColor: '#B19CD9'
+        backgroundColor: HEADER_COLOR
     },
     backgroundImage: {
         width: '100%', 

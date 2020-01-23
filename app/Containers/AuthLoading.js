@@ -1,16 +1,18 @@
 import React from 'react'
 import {Text, StyleSheet, SafeAreaView, ActivityIndicator, StatusBar} from 'react-native'
-
+import { HEADER_COLOR } from '../Constants/colors'
 
 
 const AuthLoading = props => {
     const continueForNow = () => {
         setTimeout(() => {
             props.navigation.navigate("Login")
+            // props.navigation.navigate("Home")
         }, 2000)
     }
 
     continueForNow()
+    
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor="#B19CD9"/>
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#B19CD9'
+        backgroundColor: HEADER_COLOR
     },
     title: {
         fontSize: 20,

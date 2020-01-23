@@ -1,4 +1,3 @@
-import React from 'react'
 import MainNavigator from './app/Navigators/MainNavigator'
 import {createAppContainer} from 'react-navigation'
 

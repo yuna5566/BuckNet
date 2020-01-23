@@ -10,11 +10,29 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native'
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 const backgroundCover = require('../Assets/img/login_bg.jpg')
 
 const Login = props => {
+
+    const signInWithFacebook = () => {
+        LoginManager.logInWithPermissions(["public_profile"]).then(
+            (result, error) => {
+                if (error){
+                    console.log("Login fail with error: " + error)
+                } else if (result.isCancelled) {
+                    console.log("Login cancelled")
+                } else {
+                    AccessToken.getCurrentAccessToken().then(data => {
+                        console.log(data.accessToken.toString())
+                    })
+                    console.log("Login success with permissions: " + result.grantedPermissions.toString())
+                }
+            }
+        );
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -44,7 +62,7 @@ const Login = props => {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.facebook_btn_container}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={signInWithFacebook}>
                                 <Text style={styles.btn_text}>Sign in using Facebook</Text>
                             </TouchableOpacity>
                         </View>
@@ -116,24 +134,3 @@ const styles = StyleSheet.create({
 
 export { Login }
 // export default Login
-
-{/* <View>
-                <LoginButton
-                onLoginFinished={
-                    (error, result) => {
-                        if (error) {
-                            console.log("login has error: " + result.error);
-                        } else if (result.isCancelled) {
-                            console.log("login is cancelled.");
-                        } else {
-                            AccessToken.getCurrentAccessToken().then(
-                                (data) => {
-                                    console.log(data.accessToken.toString())
-                                }
-                            )
-                        }
-                    }
-                }
-                onLogoutFinished={() => console.log("logout.")}/>
-            </View> */}
-        // justifyContent: 'center',

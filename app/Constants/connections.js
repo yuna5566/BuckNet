@@ -1,0 +1,1 @@
+export const URL_LINK = "https://source.unsplash.com/featured/?"

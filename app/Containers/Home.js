@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View, 
     Text,
@@ -6,12 +6,13 @@ import {
     StatusBar,
     Dimensions,
     StyleSheet,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native'
 import { HEADER_COLOR } from '../Constants/colors'
 
 import EntryHolder from '../Components/EntryHolder'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import AddEntryForm from '../Components/AddEntryForm'
 
 const testState = [
     {
@@ -42,6 +43,15 @@ const testState = [
 ]
 
 const Home = props => {
+    const [showModal, setShowModal] = useState(false)
+
+    const showModalHandler = () => {
+        setShowModal(true)
+    }
+
+    const closeModalHandler = () => {
+        setShowModal(false)
+    }
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -63,12 +73,17 @@ const Home = props => {
             </View>
             
             <View style={styles.btn_add_container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={showModalHandler}>
                     <View style={styles.btn_add_wrapper}>
                         <Text style={styles.btn_add_text}>+</Text>
                     </View>
                 </TouchableOpacity>
             </View>
+
+            <AddEntryForm
+                showModal={showModal}
+                onCancel={closeModalHandler}
+            />
         </SafeAreaView>
     )
 }

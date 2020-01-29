@@ -1,38 +1,34 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import CategoryHolder from '../Components/CategoryHolder'
-const categories = [
-    {
-        id: "0",
-        name: "Adventure"
-    },
-    {
-        id: "1",
-        name: "Travel"
-    },
-    {
-        id: "2",
-        name: "Career"
-    },
-    {
-        id: "3",
-        name: "Financial"
-    },
-    {
-        id: "4",
-        name: "Relationship"
-    },
-]
+import { Categories } from '../Constants/categories'
 
 const CategorySelection = props => {
+    const selectedCategory = (id) => {
+        Categories.forEach(category => {
+            if (category.id === id){
+                category.selected = true
+            } else {
+                category.selected = false;
+            }
+        })
+    }
+
+    const getCategoryFunction = {
+        getCategory: props.category,
+        getSelectedCategory: selectedCategory
+    }
+
     return (
         <View>
             <FlatList
-                data={categories}
+                data={Categories}
                 renderItem={({item}) => (
                     <CategoryHolder
                         id={item.id}
                         name={item.name}
+                        selected={item.selected}
+                        category={getCategoryFunction}
                     />
                 )}
                 keyExtractor={item => item.id}

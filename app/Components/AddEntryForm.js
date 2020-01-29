@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useContext } from 'react'
 import {
     View,
     Text,
@@ -15,21 +15,41 @@ import { HEADER_COLOR } from '../Constants/colors'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import ImagePicker from 'react-native-image-crop-picker'
 import CategorySelection from '../Components/CategorySelection'
+import StateContext from '../Hooks/Context'
 
 let defaultState = {
-    show: false,
+    name: "",
+    description: "",
+    category: "",
     date: "Pick a date",
-    privacy: "Shared"
+    privacy: "Private",
+    imageURL: URL_LINK,
+    show: false
 }
 
 const AddEntryForm = props => {
+    const stateContext = useContext(StateContext)
     const [entryState, setEntryState] = useState(defaultState)
-    const [imagePath, setImagePath] = useState(URL_LINK);
     const [isLoading, setIsLoading] = useState(false)
+
     const showDate = () => {
         setEntryState({
             ...entryState,
             show: true
+        })
+    }
+
+    const inputNameHandler = (inputName) => {
+        setEntryState({
+            ...entryState,
+            name: inputName
+        })
+    }
+
+    const inputDescHandler = (inputDesc) => {
+        setEntryState({
+            ...entryState,
+            description: inputDesc
         })
     }
 
@@ -48,23 +68,25 @@ const AddEntryForm = props => {
             height: 400,
             cropping: true
           }).then(image => {
-            console.log(image.data);
-            setImagePath(image.path)
+            setEntryState({
+                ...entryState,
+                imageURL: image.path
+            })
           }).catch(error =>
             console.log("Rejected: ", error)
           );
     }
 
     const changePrivacyHandler = () => {
-        if (entryState.privacy === "Shared"){
+        if (entryState.privacy !== "Shared"){
             setEntryState({
                 ...entryState,
-                privacy: "Private"
+                privacy: "Shared"
             })
         } else {
             setEntryState({
                 ...entryState,
-                privacy: "Shared"
+                privacy: "Private"
             })
         }
     }
@@ -72,21 +94,42 @@ const AddEntryForm = props => {
     const getImageFromSplash = async () => {
         setIsLoading(true)
         let imagePathFromSplash = await fetch(URL_LINK).then(response => response.url)
-        setImagePath(imagePathFromSplash)
+        setEntryState({
+            ...entryState,
+            imageURL: imagePathFromSplash
+        })
         setIsLoading(false)
     }
 
-    console.log("path: ", imagePath)
+    const cancelAddEntry = () => {
+        setEntryState(defaultState)
+        props.onCancel()
+    }
+
+    const getCategoryHandler = (category) => {
+        setEntryState({
+            ...entryState,
+            category: category
+        })
+    }
+
+    const addEntryHandler = () => {
+        const payload = entryState
+        stateContext.entryDispatch({type: 'add_entry', payload})
+        cancelAddEntry()
+    }
+
+    console.log(stateContext.entryState)
     return (
         <Modal visible={props.showModal} animationType="fade" style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={props.onCancel}>
-                    <Text>BACK</Text>
+                <TouchableOpacity style={styles.backButton} onPress={cancelAddEntry}>
+                    <Text style={{fontWeight: 'bold', fontSize: 20}}> Back </Text>
                 </TouchableOpacity>
                 {isLoading ? <ActivityIndicator style={{width: "100%", height: "100%"}}/> :
                     <Image
-                        source={{uri: imagePath}}Shared
+                        source={{uri: entryState.imageURL}}
                         style={{width: "100%", height: "100%"}}
                     />
                 }
@@ -97,15 +140,21 @@ const AddEntryForm = props => {
                     placeholder="Name"
                     placeholderTextColor="white"
                     underlineColorAndroid='white'
+                    value={entryState.name}
+                    onChangeText={inputNameHandler}
                 />
                 <TextInput
                     placeholder="Description"
                     placeholderTextColor="white"
                     underlineColorAndroid='white'
+                    value={entryState.description}
+                    onChangeText={inputDescHandler}
                 />
                 <View style={[styles.body_wrapper_1, {flexDirection: 'column'}]}>
                     <Text>Categories:</Text>
-                    <CategorySelection />
+                    <CategorySelection 
+                        category={getCategoryHandler}
+                    />
                 </View>
                 <View style={styles.body_wrapper_1}>
                     <Text>Expected to Achieve:</Text>
@@ -136,6 +185,13 @@ const AddEntryForm = props => {
                         <Text>{entryState.privacy}</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.btn_wrapper}>
+                    <TouchableOpacity onPress={addEntryHandler}>
+                        <View style={styles.btn_wrapper_container}>
+                            <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}>Someday</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </Modal>
     )
@@ -152,7 +208,7 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        backgroundColor: HEADER_COLOR
+        backgroundColor: HEADER_COLOR,
     },
     body_wrapper_1: {
         flexDirection: 'row',
@@ -161,6 +217,21 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 3,
         marginRight: 3
+    },
+    btn_wrapper: {
+        justifyContent:'center',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    btn_wrapper_container: {
+        borderWidth: 0,
+        width: 180,
+        height: 45,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 30,
+        elevation: 1,
+        backgroundColor: 'gray'
     },
     backButton: {
         position:'absolute', 

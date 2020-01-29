@@ -8,7 +8,6 @@ export const reducer = (state, action) => {
         case 'add_entry':
             console.log("...........ADD ENTRY")
             state.bucketList.push(action.payload)
-            updateStateStorage(state)
             return state
 
         case 'delete_entry':

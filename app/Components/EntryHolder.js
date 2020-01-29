@@ -7,7 +7,6 @@ import {
     ImageBackground
 } from 'react-native'
 import { URL_LINK } from '../Constants/connections'
-import Modal from './AddEntryForm'
 
 const EntryHolder = props => {
     const [imageAPI, setImage] = useState(URL_LINK);

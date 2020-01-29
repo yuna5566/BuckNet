@@ -6,34 +6,73 @@ import {
     TouchableOpacity,
     ImageBackground
 } from 'react-native'
-import { URL_LINK } from '../Constants/connections'
 
 const EntryHolder = props => {
-    const [imageAPI, setImage] = useState(URL_LINK);
-
+    const {id, name, description, imageURL} = props.entry
+    const [imageAPI, setImage] = useState(imageURL);
+    
+    console.log("PROPS ", props)
     return(
-        <TouchableOpacity>
+        <View style={styles.container}>
             <View style={styles.cardContainer}>
-                <ImageBackground blurRadius={1} source={{uri: imageAPI}} style={styles.imageBG}>
-                    <Text> {props.id} </Text>
-                    <Text> {props.entry} </Text>
-                    <Text> {props.desc} </Text>
-                </ImageBackground>
+                <TouchableOpacity>
+                    <ImageBackground blurRadius={0} source={{uri: imageAPI}} style={styles.imageBG}>
+                        <View style={styles.overlay}>
+                            <Text style={styles.textStyle_1}> {name} </Text>
+                            <Text style={styles.textStyle_2}> {description} </Text>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        paddingHorizontal: '2%',
+        height: 150
+    },
     cardContainer: {
-        backgroundColor: 'violet',
-        height: 150,
-        borderWidth: 1,
-        borderColor: 'white'
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 6,
+        shadowOpacity: 0.26,
+        elevation: 5,
+        backgroundColor: 'gray',
+        borderRadius: 20,
+        marginVertical: 5,
+        width: '100%',
+        overflow: 'hidden'
     },
     imageBG: {
         height: '100%',
         width: '100%',
+        overflow: 'hidden'
+    },
+    overlay: {
+        backgroundColor:'rgba(128,128,128,0.4)',
+        paddingLeft: 20,
+        justifyContent: 'center',
+        height: '100%',
+        width: '100%',
+        paddingVertical: 10
+    },
+    textStyle_1: {
+        borderWidth: 0,
+        fontWeight: 'bold',
+        fontSize: 30,
+        color: 'white',
+        
+    },
+    textStyle_2: {
+        fontSize: 15,
+        color: 'white',
+        paddingLeft: 15
     }
 })
 

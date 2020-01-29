@@ -8,7 +8,8 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    ActivityIndicator
+    ActivityIndicator,
+    ScrollView
 } from 'react-native'
 import { URL_LINK } from '../Constants/connections'
 import { HEADER_COLOR } from '../Constants/colors'
@@ -17,7 +18,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 import CategorySelection from '../Components/CategorySelection'
 import StateContext from '../Hooks/Context'
 
-let defaultState = {
+const defaultState = {
     name: "",
     description: "",
     category: "",
@@ -114,9 +115,20 @@ const AddEntryForm = props => {
     }
 
     const addEntryHandler = () => {
-        const payload = entryState
+        let id = getMaxId()
+        const payload = {
+            ...entryState,
+            id: id.toString()
+        }
         stateContext.entryDispatch({type: 'add_entry', payload})
         cancelAddEntry()
+    }
+
+    const getMaxId = () => {
+        const arr1 = stateContext.entryState.bucketList.map(value => parseInt(value.id))
+        const arr2 = stateContext.entryState.doneList.map(value => parseInt(value.id))
+        const arrId = arr1.concat(arr2).sort()
+        return arrId.length > 0 ? arrId[arrId.length - 1] + 1 : 0
     }
 
     console.log(stateContext.entryState)
@@ -221,17 +233,17 @@ const styles = StyleSheet.create({
     btn_wrapper: {
         justifyContent:'center',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 10
     },
     btn_wrapper_container: {
         borderWidth: 0,
         width: 180,
-        height: 45,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
         elevation: 1,
-        backgroundColor: 'gray'
+        backgroundColor: '#06a94d'
     },
     backButton: {
         position:'absolute', 

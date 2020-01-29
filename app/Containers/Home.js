@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     View, 
     Text,
@@ -13,6 +13,7 @@ import { HEADER_COLOR } from '../Constants/colors'
 
 import EntryHolder from '../Components/EntryHolder'
 import AddEntryForm from '../Components/AddEntryForm'
+import StateContext from '../Hooks/Context'
 
 const testState = [
     {
@@ -43,6 +44,7 @@ const testState = [
 ]
 
 const Home = props => {
+    const stateContext = useContext(StateContext)
     const [showModal, setShowModal] = useState(false)
 
     const showModalHandler = () => {
@@ -60,12 +62,10 @@ const Home = props => {
             </View>
             <View style={styles.body}>
                 <FlatList
-                    data={testState}
+                    data={stateContext.entryState.bucketList}
                     renderItem={({item}) => (
                         <EntryHolder 
-                            id={item.id}
-                            entry={item.entry}
-                            desc={item.desc}
+                            entry={item}
                         />
                     )}
                     keyExtractor={item => item.id}

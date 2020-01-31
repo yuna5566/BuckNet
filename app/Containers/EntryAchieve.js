@@ -5,7 +5,6 @@ import {
     StyleSheet, 
     SafeAreaView, 
     ImageBackground,
-    TextInput,
     TouchableOpacity
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -17,7 +16,7 @@ const EntryArchieve = props => {
     const [stateEntry, setStateEntry] = useState(entry)
 
     const deleteState = () => {
-        stateContext.entryDispatch({type: 'delete_entry', id: stateEntry.id})
+        stateContext.entryDispatch({type: 'delete_done', id: stateEntry.id})
         refresh()
         props.navigation.goBack()
     }

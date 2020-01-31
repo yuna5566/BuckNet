@@ -38,6 +38,11 @@ export const reducer = (state, action) => {
             const newDoneList = state.doneList.filter(object => object.id !== doneItem.id)
             state.doneList = newDoneList
             return state
+        
+        case 'delete_done':
+            const updatedDoneList = state.doneList.filter(value => value.id !== action.id)
+            state.doneList = updatedDoneList
+            return state
 
         case 'initialize_state':
             if(action.payload){

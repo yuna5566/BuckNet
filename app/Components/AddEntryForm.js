@@ -24,7 +24,7 @@ const defaultState = {
     category: "",
     date: "Pick a date",
     privacy: "Private",
-    imageURL: URL_LINK,
+    imageURL: URL_LINK + "water",
     show: false
 }
 
@@ -154,6 +154,8 @@ const AddEntryForm = props => {
                     underlineColorAndroid='white'
                     value={entryState.name}
                     onChangeText={inputNameHandler}
+                    maxLength={20}
+                    
                 />
                 <TextInput
                     placeholder="Description"
@@ -161,6 +163,7 @@ const AddEntryForm = props => {
                     underlineColorAndroid='white'
                     value={entryState.description}
                     onChangeText={inputDescHandler}
+                    maxLength={80}
                 />
                 <View style={[styles.body_wrapper_1, {flexDirection: 'column'}]}>
                     <Text>Categories:</Text>
@@ -175,7 +178,7 @@ const AddEntryForm = props => {
                     </TouchableOpacity>
                     {entryState.show && 
                         <DateTimePicker 
-                        ValueContext    value={new Date()}
+                            value={new Date()}
                             mode={"date"}
                             display={"calendar"}
                             onChange={setDateHandler}

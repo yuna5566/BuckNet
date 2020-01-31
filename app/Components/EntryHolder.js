@@ -10,12 +10,19 @@ import {
 const EntryHolder = props => {
     const {id, name, description, imageURL} = props.entry
     const [imageAPI, setImage] = useState(imageURL);
-    
-    console.log("PROPS ", props)
+    const { navigate } = props 
+    const toUpdateScreen = () => { 
+        navigate('UpdateScreen', {
+            entry: props.entry, 
+            index: props.index, 
+            refresh: props.refresh
+        }) 
+    }
+    console.log("ENTRY HOLDER PROPRS", props)
     return(
         <View style={styles.container}>
             <View style={styles.cardContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={toUpdateScreen}>
                     <ImageBackground blurRadius={0} source={{uri: imageAPI}} style={styles.imageBG}>
                         <View style={styles.overlay}>
                             <Text style={styles.textStyle_1}> {name} </Text>

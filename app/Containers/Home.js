@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import {
     View, 
     Text,
@@ -7,7 +7,8 @@ import {
     Dimensions,
     StyleSheet,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Button
 } from 'react-native'
 import { HEADER_COLOR } from '../Constants/colors'
 
@@ -15,37 +16,11 @@ import EntryHolder from '../Components/EntryHolder'
 import AddEntryForm from '../Components/AddEntryForm'
 import StateContext from '../Hooks/Context'
 
-const testState = [
-    {
-        id: '0',
-        entry: 'name 0',
-        desc: 'desc 0'
-    },
-    {
-        id: '1',
-        entry: 'name 1',
-        desc: 'desc 1'
-    },
-    {
-        id: '2',
-        entry: 'name 2',
-        desc: 'desc 2'
-    },
-    {
-        id: '3',
-        entry: 'name 3',
-        desc: 'desc 3'
-    },
-    {
-        id: '4',
-        entry: 'name 4',
-        desc: 'desc 4'
-    },
-]
-
 const Home = props => {
     const stateContext = useContext(StateContext)
     const [showModal, setShowModal] = useState(false)
+    const { navigate } = props.navigation
+    const [up, updateState] = useState();
 
     const showModalHandler = () => {
         setShowModal(true)
@@ -54,6 +29,12 @@ const Home = props => {
     const closeModalHandler = () => {
         setShowModal(false)
     }
+
+    const refreshPageHandler = useCallback(() => {
+        updateState({})
+        console.log("call force update")
+    }, [])
+
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -63,9 +44,12 @@ const Home = props => {
             <View style={styles.body}>
                 <FlatList
                     data={stateContext.entryState.bucketList}
-                    renderItem={({item}) => (
+                    renderItem={({item, index}) => (
                         <EntryHolder 
                             entry={item}
+                            navigate={navigate}
+                            index={index}
+                            refresh={refreshPageHandler}
                         />
                     )}
                     keyExtractor={item => item.id}
@@ -79,7 +63,7 @@ const Home = props => {
                     </View>
                 </TouchableOpacity>
             </View>
-
+            
             <AddEntryForm
                 showModal={showModal}
                 onCancel={closeModalHandler}

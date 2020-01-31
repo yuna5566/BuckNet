@@ -14,23 +14,19 @@ export const reducer = (state, action) => {
             console.log("...........DELETE ENTRY")
             const updatedBucketList = state.bucketList.filter(value => value.id !== action.id)
             state.bucketList = updatedBucketList
-            updateStateStorage(state)
             return state
 
         case 'entry_done':
             console.log("...........DONE ENTRY")
             const item = state.bucketList[action.index]
-            item.done = true
             state.doneList.push(item)
             const newBucketList = state.bucketList.filter(value => value.id !== item.id)
             state.bucketList = newBucketList
-            updateStateStorage(state)
             return state
 
         case 'update_entry':
             console.log("...........UPDATE ENTRY")
             state.bucketList[action.index] = action.payload
-            updateStateStorage(state)
             return state
 
         case 'undo_entry':

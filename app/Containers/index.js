@@ -3,4 +3,5 @@ export * from '../Containers/Home'
 export * from '../Containers/Login'
 export * from '../Containers/Profile'
 export * from '../Containers/EntryUpdate'
-
+export * from '../Containers/EntryAchieve'
+export * from '../Containers/Achieve'

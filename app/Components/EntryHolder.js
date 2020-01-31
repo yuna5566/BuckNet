@@ -10,15 +10,16 @@ import {
 const EntryHolder = props => {
     const {id, name, description, imageURL} = props.entry
     const [imageAPI, setImage] = useState(imageURL);
-    const { navigate } = props 
+    const { navigate, route } = props 
     const toUpdateScreen = () => { 
-        navigate('UpdateScreen', {
+        let nextScreen = route === "HomeScreen" ? "UpdateScreen" : "EntryAchieveScreen"
+        navigate( nextScreen, {
             entry: props.entry, 
             index: props.index, 
             refresh: props.refresh
-        }) 
+        })
     }
-    console.log("ENTRY HOLDER PROPRS", props)
+    
     return(
         <View style={styles.container}>
             <View style={styles.cardContainer}>

@@ -143,7 +143,7 @@ const EntryUpdate = props => {
                         </View>
                     </TouchableOpacity>
                 </View>
-
+            
             </ImageBackground>
         </SafeAreaView>
     )
@@ -226,6 +226,21 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     del_btn_wrapper: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    undo_btn_container: {
+        position:'absolute',
+        bottom: 10,
+        right: 20,
+        backgroundColor: 'white',
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+    },
+    undo_btn_wrapper: {
         width: '100%',
         height: '100%',
         justifyContent: 'center',

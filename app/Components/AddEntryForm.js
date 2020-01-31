@@ -25,7 +25,8 @@ const defaultState = {
     date: "Pick a date",
     privacy: "Private",
     imageURL: URL_LINK + "water",
-    show: false
+    show: false,
+    done: false
 }
 
 const AddEntryForm = props => {
@@ -131,7 +132,6 @@ const AddEntryForm = props => {
         return arrId.length > 0 ? arrId[arrId.length - 1] + 1 : 0
     }
 
-    console.log(stateContext.entryState)
     return (
         <Modal visible={props.showModal} animationType="fade" style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>

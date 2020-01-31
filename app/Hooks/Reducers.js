@@ -19,6 +19,7 @@ export const reducer = (state, action) => {
         case 'entry_done':
             console.log("...........DONE ENTRY")
             const item = state.bucketList[action.index]
+            item.done = true
             state.doneList.push(item)
             const newBucketList = state.bucketList.filter(value => value.id !== item.id)
             state.bucketList = newBucketList
@@ -36,7 +37,6 @@ export const reducer = (state, action) => {
             state.bucketList.push(doneItem)
             const newDoneList = state.doneList.filter(object => object.id !== doneItem.id)
             state.doneList = newDoneList
-            updateStateStorage(state)
             return state
 
         case 'initialize_state':

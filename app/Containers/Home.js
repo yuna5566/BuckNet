@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useContext, useCallback, useEffect } from 'react'
 import {
     View, 
     Text,
@@ -19,22 +19,23 @@ import StateContext from '../Hooks/Context'
 const Home = props => {
     const stateContext = useContext(StateContext)
     const [showModal, setShowModal] = useState(false)
-    const { navigate } = props.navigation
-    const [up, updateState] = useState();
+    const { navigate, state } = props.navigation
+    const [, updateState] = useState();
+    const route = state.routeName
 
-    const showModalHandler = () => {
-        setShowModal(true)
-    }
+    const showModalHandler = () => { setShowModal(true) }
 
-    const closeModalHandler = () => {
-        setShowModal(false)
-    }
+    const closeModalHandler = () => { setShowModal(false) }
 
     const refreshPageHandler = useCallback(() => {
         updateState({})
-        console.log("call force update")
     }, [])
 
+    useEffect(() => {
+        props.navigation.addListener('didFocus', refreshPageHandler)
+    }, [])
+
+    console.log("Home rendering...")
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -50,6 +51,7 @@ const Home = props => {
                             navigate={navigate}
                             index={index}
                             refresh={refreshPageHandler}
+                            route={route}
                         />
                     )}
                     keyExtractor={item => item.id}

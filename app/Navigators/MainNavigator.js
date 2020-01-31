@@ -1,4 +1,4 @@
-import { AuthLoading, Home, Login, Profile, EntryUpdate } from '../Containers/index'
+import { AuthLoading, Home, Login, Profile, EntryUpdate, Achieve, EntryArchieve } from '../Containers/index'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
@@ -18,24 +18,28 @@ const HomeStack = createStackNavigator({
     }
 })
 
-// HomeStack.navigationOptions = ({navigation}) => {
-//     let tabBarVisible = true
-//     if (navigation.state.index === 1){
-//         tabBarVisible = false
-//     }
-
-//     return {
-//         tabBarVisible
-//     };
-// }
+const AchieveStack = createStackNavigator({
+    AchieveScreen: {
+        screen: Achieve
+    },
+    EntryAchieveScreen: {
+        screen: EntryArchieve
+    }
+},
+{
+    headerMode: 'none',
+    navigationOptions: {
+        headerShown: false,
+    }
+})
 
 
 const AppTabNavigator = createBottomTabNavigator({
-    // Home: {
-    //     screen: Home
-    // },
     Home: {
         screen: HomeStack
+    },
+    Achieve: {
+        screen: AchieveStack
     },
     Profile: {
         screen: Profile

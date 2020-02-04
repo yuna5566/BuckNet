@@ -10,27 +10,41 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native'
-import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { HEADER_COLOR } from '../Constants/colors'
-
+import AsyncStorage from '@react-native-community/async-storage';
 const backgroundCover = require('../Assets/img/login_bg.jpg')
 
 const Login = props => {
-    const signInWithFacebook = () => {
-        LoginManager.logInWithPermissions(["public_profile"]).then(
-            (result, error) => {
-                if (error){
-                    console.log("Login fail with error: " + error)
-                } else if (result.isCancelled) {
-                    console.log("Login cancelled")
-                } else {
-                    AccessToken.getCurrentAccessToken().then(data => {
-                        console.log(data.accessToken.toString())
-                    })
-                    console.log("Login success with permissions: " + result.grantedPermissions.toString())
+    const signInWithFacebook = async() => {
+        try{
+            const successLogin = await LoginManager.logInWithPermissions(["public_profile", "user_gender", "email"]);
+            const getToken = await AccessToken.getCurrentAccessToken();
+            const getInfo = new GraphRequest(
+                'me?fields=id,name,email,age_range,gender,birthday',
+                getToken,
+                (error, result) => {
+                    if (error) {
+                        console.log('login info has error: ' + error);
+                    } else {
+                        console.log('result:', result);
+                        const email = ['@email', result.email];
+                        const gender = ['@gender', result.gender];
+                        const name = ['@name', result.name];
+                        const access = ['@access', 'true'];
+                        storeUserInfo([email, gender, name, access]);
+                    }
                 }
-            }
-        )
+            );
+            new GraphRequestManager().addRequest(getInfo).start();
+        }catch (error) {
+            console.log(error)
+        }
+    }
+
+    const storeUserInfo = async (userInfo) => {
+        await AsyncStorage.multiSet(userInfo);
+        goToHome();
     }
 
     const goToHome = () => {
@@ -43,7 +57,7 @@ const Login = props => {
             <ImageBackground source={backgroundCover} style={styles.backgroundImage}>
             <View style={styles.body_container}>
                 <View style={styles.body_container_wrapper_1}>
-                    <Text style={styles.title} onPress={goToHome}>BUCKNET</Text>
+                    <Text style={styles.title}>BUCKNET</Text>
                 </View>
                 <View style={styles.body_container_wrapper_2}>
                     <View style={styles.form_container}>
@@ -61,7 +75,7 @@ const Login = props => {
                             secureTextEntry={true}
                         />
                         <View style={styles.signin_btn_container}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={goToHome}>
                                 <Text style={styles.btn_text}>Sign In</Text>
                             </TouchableOpacity>
                         </View>
@@ -138,3 +152,35 @@ const styles = StyleSheet.create({
 
 export { Login }
 // export default Login
+
+//BEFORE I REFACTORED THE CODE...
+ // const signInWithFacebook1 = () => {
+    //     LoginManager.logInWithPermissions(["public_profile", "user_age_range", "user_gender", "email"]).then(
+    //         (result, error) => {
+    //             if (error){
+    //                 console.log("Login fail with error: " + error)
+    //             } else if (result.isCancelled) {
+    //                 console.log("Login cancelled")
+    //             } else {
+    //                 AccessToken.getCurrentAccessToken().then(data => {
+    //                     console.log("DATA - Access Token: ", data.accessToken.toString())
+    //                     const info = new GraphRequest(
+    //                         'me?fields=id,name,email,age_range,gender',
+    //                         null,
+    //                         (error, result) => {
+    //                             if (error) {
+    //                                 console.log('login info has error: ' + error);
+    //                             } else {
+    //                                 console.log('result:', result);
+    //                             }
+    //                         }
+    //                     );
+    //                     new GraphRequestManager().addRequest(info).start();
+    //                 }).catch(err => {
+    //                     console.log(err)
+    //                 })
+    //                 console.log("Login success with permissions: " + result.grantedPermissions.toString())
+    //             }
+    //         }
+    //     )
+    // }

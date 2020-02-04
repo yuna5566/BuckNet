@@ -1,17 +1,19 @@
 import React from 'react'
 import {Text, StyleSheet, SafeAreaView, ActivityIndicator, StatusBar} from 'react-native'
 import { HEADER_COLOR } from '../Constants/colors'
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 const AuthLoading = props => {
-    const continueForNow = () => {
+    const continueForNow = async() => {
+        const withAccess = await AsyncStorage.getItem('@access');
+        console.log(withAccess);
         setTimeout(() => {
-            props.navigation.navigate("Login")
-            // props.navigation.navigate("Home")
+            props.navigation.navigate( Boolean(withAccess) ? "Home" : "Login");
         }, 2000)
     }
 
-    continueForNow()
+    continueForNow();
     
     return(
         <SafeAreaView style={styles.container}>

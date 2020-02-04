@@ -99,36 +99,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20
     },
-    edit_btn_container: {
-        position:'absolute',
-        bottom: 70,
-        right: 20,
-        backgroundColor: 'white',
-        width: 50,
-        height: 50,
-        borderRadius: 30,
-    },
-    done_btn_container: {
-        position:'absolute',
-        bottom: 10,
-        right: 20,
-        backgroundColor: 'white',
-        width: 50,
-        height: 50,
-        borderRadius: 30,
-    },
-    done_btn_wrapper: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    edit_btn_wrapper: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     del_btn_container: {
         position:'absolute',
         bottom: 130,

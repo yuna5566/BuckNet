@@ -192,6 +192,9 @@ dependencies {
     //FOR REACT NATIVE DATETIMEPICKER
     implementation project(':react-native-datetimepicker')
 
+    //FOR REACT NATIVE VECTOR ICONS
+    implementation project(':react-native-vector-icons')
+
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
@@ -209,3 +212,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

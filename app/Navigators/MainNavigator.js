@@ -1,7 +1,9 @@
+import React from 'react'
 import { AuthLoading, Home, Login, Profile, EntryUpdate, Achieve, EntryArchieve } from '../Containers/index'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { Icon } from 'react-native-elements'
 
 const HomeStack = createStackNavigator({
     HomeScreen: {
@@ -36,13 +38,33 @@ const AchieveStack = createStackNavigator({
 
 const AppTabNavigator = createBottomTabNavigator({
     Home: {
-        screen: HomeStack
+        screen: HomeStack,
+        navigationOptions: {
+            tabBarIcon: ({tintColor: color}) => (
+                <Icon name='home' color={color}/>
+            )
+        }
     },
     Achieve: {
-        screen: AchieveStack
+        screen: AchieveStack,
+        navigationOptions: {
+            tabBarIcon: ({tintColor: color}) => (
+                <Icon name='done' color={color}/>
+            )
+        }
     },
     Profile: {
-        screen: Profile
+        screen: Profile,
+        navigationOptions: {
+            tabBarIcon: ({tintColor: color}) => (
+                <Icon name='account-circle' color={color}/>
+            )
+        }
+    }
+}, {
+    tabBarOptions: {
+        showIcon: true,
+        showLabel: false,
     }
 })
 

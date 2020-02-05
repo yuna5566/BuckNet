@@ -1,20 +1,17 @@
 import React, { useState } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-
-const defaultColor = "orange"
-const highlightColor = "white"
+import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native'
+import { Categories } from '../Constants/categories'
 
 const CategoryHolder = props => {
-    const [highlight, setHighlight] = useState(defaultColor)
     const {getCategory, getSelectedCategory} = props.category;
     const getCategoryHandler = () => { 
         getCategory(props.name)
         getSelectedCategory(props.id)
     }
-    
+
     return(
         <TouchableOpacity onPress={getCategoryHandler}>
-            <View style={[styles.container, {backgroundColor: highlight}]}>
+            <View style={styles.container}>
                 <Text>{props.name}</Text>
             </View>
         </TouchableOpacity>
@@ -23,7 +20,7 @@ const CategoryHolder = props => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: defaultColor,
+        backgroundColor: 'orange',
         borderWidth: 0,
         borderRadius: 10,
         width: 100,

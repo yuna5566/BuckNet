@@ -166,15 +166,15 @@ const AddEntryForm = props => {
                     maxLength={80}
                 />
                 <View style={[styles.body_wrapper_1, {flexDirection: 'column'}]}>
-                    <Text>Categories:</Text>
+                    <Text style={styles.text_style}>Categories: {entryState.category}</Text>
                     <CategorySelection 
                         category={getCategoryHandler}
                     />
                 </View>
                 <View style={styles.body_wrapper_1}>
-                    <Text>Expected to Achieve:</Text>
+                    <Text style={styles.text_style}>Expected to Achieve:</Text>
                     <TouchableOpacity onPress={showDate}>
-                        <Text>{entryState.date}</Text>
+                        <Text style={styles.text_style}>{entryState.date}</Text>
                     </TouchableOpacity>
                     {entryState.show && 
                         <DateTimePicker 
@@ -186,18 +186,18 @@ const AddEntryForm = props => {
                     }
                 </View>
                 <View style={styles.body_wrapper_1}>
-                    <Text>Image:</Text>
+                    <Text style={styles.text_style}>Image:</Text>
                     <TouchableOpacity onPress={getImageFromSplash}>
-                        <Text>Refresh</Text>
+                        <Text style={styles.text_style}>Refresh</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={pickImageFromGallery}>
-                        <Text>Gallery</Text>
+                        <Text style={styles.text_style}>Gallery</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.body_wrapper_1}>
-                    <Text>Shared/Private:</Text>
+                    <Text style={styles.text_style}>Shared/Private:</Text>
                     <TouchableOpacity onPress={changePrivacyHandler}>
-                        <Text>{entryState.privacy}</Text>
+                        <Text style={styles.text_style}>{entryState.privacy}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btn_wrapper}>
@@ -253,6 +253,9 @@ const styles = StyleSheet.create({
         zIndex: 1, 
         start: 10, 
         top: 10
+    },
+    text_style: {
+        color: 'white'
     }
 })
 

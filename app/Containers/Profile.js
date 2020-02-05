@@ -4,8 +4,7 @@ import {
     View,
     Text,
     StyleSheet,
-    StatusBar, 
-    Button,
+    StatusBar,
     Image,
     ActivityIndicator,
     ScrollView
@@ -109,7 +108,6 @@ const Profile = props => {
                     </ScrollView>
                 </View>
             }
-            
         </SafeAreaView>
     )
 }

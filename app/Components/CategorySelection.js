@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { View, FlatList } from 'react-native'
 import CategoryHolder from '../Components/CategoryHolder'
 import { Categories } from '../Constants/categories'
@@ -12,6 +12,7 @@ const CategorySelection = props => {
                 category.selected = false;
             }
         })
+        // console.log("CAT ", Categories)
     }
 
     const getCategoryFunction = {

@@ -21,8 +21,8 @@ const Login = props => {
             const successLogin = await LoginManager.logInWithPermissions(["public_profile", "user_gender", "email"]);
             const getToken = await AccessToken.getCurrentAccessToken();
             const getInfo = new GraphRequest(
-                'me?fields=id,name,email,age_range,gender,birthday',
-                getToken,
+                'me?fields=id,name,email,age_range,gender,birthday,picture.type(large)',
+                { accessToken: getToken.accessToken },
                 (error, result) => {
                     if (error) {
                         console.log('login info has error: ' + error);
@@ -32,7 +32,8 @@ const Login = props => {
                         const gender = ['@gender', result.gender];
                         const name = ['@name', result.name];
                         const access = ['@access', 'true'];
-                        storeUserInfo([email, gender, name, access]);
+                        const profilePic = ['@profile_pic', result.picture.data.url]
+                        storeUserInfo([email, gender, name, access, profilePic]);
                     }
                 }
             );

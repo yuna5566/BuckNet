@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthLoading, Home, Login, Profile, EntryUpdate, Achieve, EntryArchieve } from '../Containers/index'
+import { AuthLoading, Home, Login, Profile, EntryUpdate, Achieve, EntryArchieve, SignUp } from '../Containers/index'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
@@ -34,6 +34,21 @@ const AchieveStack = createStackNavigator({
         headerShown: false,
     }
 })
+
+const LoginStack = createStackNavigator({
+    LoginScreen: {
+        screen: Login
+    },
+    SignUpScreen: {
+        screen: SignUp
+    }
+},
+{
+    headerMode: 'none',
+    navigationOptions: {
+        headerShown: false,
+    }
+});
 
 
 const AppTabNavigator = createBottomTabNavigator({
@@ -70,7 +85,7 @@ const AppTabNavigator = createBottomTabNavigator({
 
 const MainNavigator = createSwitchNavigator({
     Auth: AuthLoading,
-    Login: Login,
+    Login: LoginStack,
     App: AppTabNavigator,
 }, {
     initialRouteName: 'Auth',

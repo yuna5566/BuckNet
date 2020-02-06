@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, TouchableHighlight} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import { Categories } from '../Constants/categories'
+import { Icon } from 'react-native-elements'
 
 const CategoryHolder = props => {
     const {getCategory, getSelectedCategory} = props.category;
@@ -9,9 +10,27 @@ const CategoryHolder = props => {
         getSelectedCategory(props.id)
     }
 
+    const getCategoryIcon = (category) => {
+        switch(category){
+            case Categories[0].name:
+                return <Icon name="directions-run" type="material" color="white"/>
+            case Categories[1].name:
+                return <Icon name="flight" type="material" color="white"/>
+            case Categories[2].name:
+                return <Icon name="work" type="material" color="white"/>
+            case Categories[3].name:
+                return <Icon name="attach-money" type="material" color="white"/>
+            case Categories[4].name:
+                return <Icon name="supervisor-account" type="material" color="white"/>
+            case Categories[5].name:
+                return <Icon name="near-me" type="material" color="white"/>
+        }
+    }
+
     return(
         <TouchableOpacity onPress={getCategoryHandler}>
             <View style={styles.container}>
+                {getCategoryIcon(props.name)}
                 <Text>{props.name}</Text>
             </View>
         </TouchableOpacity>

@@ -9,7 +9,7 @@ const AuthLoading = props => {
         const withAccess = await AsyncStorage.getItem('@access');
         console.log(withAccess);
         setTimeout(() => {
-            props.navigation.navigate( Boolean(withAccess) ? "Home" : "Login");
+            props.navigation.navigate( Boolean(withAccess) ? "Home" : "LoginScreen");
         }, 2000)
     }
 

@@ -52,6 +52,10 @@ const Login = props => {
         props.navigation.navigate("Home")
     }
 
+    const goToSignUp = () => {
+        props.navigation.navigate('SignUpScreen')
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
@@ -63,7 +67,7 @@ const Login = props => {
                 <View style={styles.body_container_wrapper_2}>
                     <View style={styles.form_container}>
                         <TextInput 
-                            placeholder="Username"
+                            placeholder="Email"
                             placeholderTextColor="white"
                             selectionColor="white"
                             underlineColorAndroid='white'
@@ -83,6 +87,11 @@ const Login = props => {
                         <View style={styles.facebook_btn_container}>
                             <TouchableOpacity onPress={signInWithFacebook}>
                                 <Text style={styles.btn_text}>Sign in using Facebook</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity onPress={goToSignUp}>
+                                <Text style={styles.btn_text}>If you don't have an account, sign up!</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

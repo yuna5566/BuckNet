@@ -193,7 +193,6 @@ dependencies {
     implementation project(':react-native-datetimepicker')
 
     //FOR REACT NATIVE VECTOR ICONS
-    implementation project(':react-native-vector-icons')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

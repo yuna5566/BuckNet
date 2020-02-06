@@ -17,12 +17,13 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import ImagePicker from 'react-native-image-crop-picker'
 import CategorySelection from '../Components/CategorySelection'
 import StateContext from '../Hooks/Context'
+import { Icon } from 'react-native-elements'
 
 const defaultState = {
     name: "",
     description: "",
     category: "",
-    date: "Pick a date",
+    date: "When?",
     privacy: "Private",
     imageURL: URL_LINK + "water",
     show: false,
@@ -134,10 +135,10 @@ const AddEntryForm = props => {
 
     return (
         <Modal visible={props.showModal} animationType="fade" style={styles.container}>
-            <StatusBar translucent={true} backgroundColor="transparent"/>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={cancelAddEntry}>
-                    <Text style={{fontWeight: 'bold', fontSize: 20}}> Back </Text>
+                    {/* <Text style={{fontWeight: 'bold', fontSize: 20}}> Back </Text> */}
+                    <Icon name="keyboard-backspace" type="material" color='white' size={40}/>
                 </TouchableOpacity>
                 {isLoading ? <ActivityIndicator style={{width: "100%", height: "100%"}}/> :
                     <Image
@@ -175,6 +176,7 @@ const AddEntryForm = props => {
                     <Text style={styles.text_style}>Expected to Achieve:</Text>
                     <TouchableOpacity onPress={showDate}>
                         <Text style={styles.text_style}>{entryState.date}</Text>
+                        <Icon name="date-range" type="material" color='white'/>
                     </TouchableOpacity>
                     {entryState.show && 
                         <DateTimePicker 
@@ -189,15 +191,18 @@ const AddEntryForm = props => {
                     <Text style={styles.text_style}>Image:</Text>
                     <TouchableOpacity onPress={getImageFromSplash}>
                         <Text style={styles.text_style}>Refresh</Text>
+                        <Icon name="refresh" type="material" color='white'/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={pickImageFromGallery}>
                         <Text style={styles.text_style}>Gallery</Text>
+                        <Icon name="monochrome-photos" type="material" color='white'/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.body_wrapper_1}>
                     <Text style={styles.text_style}>Shared/Private:</Text>
                     <TouchableOpacity onPress={changePrivacyHandler}>
                         <Text style={styles.text_style}>{entryState.privacy}</Text>
+                        <Icon name="share" type="material" color='white'/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btn_wrapper}>
@@ -217,12 +222,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 1,
+        flex: 2,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
     body: {
-        flex: 1,
+        flex: 3,
         backgroundColor: HEADER_COLOR,
     },
     body_wrapper_1: {
@@ -236,7 +241,7 @@ const styles = StyleSheet.create({
     btn_wrapper: {
         justifyContent:'center',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
     btn_wrapper_container: {
         borderWidth: 0,

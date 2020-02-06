@@ -4,13 +4,13 @@ import {
     Text, 
     StyleSheet, 
     SafeAreaView, 
-    ImageBackground, 
-    Button,
+    ImageBackground,
     TextInput,
     TouchableOpacity
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import StateContext from '../Hooks/Context'
+import { Icon } from 'react-native-elements'
 
 const EntryUpdate = props => {
     const stateContext = useContext(StateContext)
@@ -123,7 +123,8 @@ const EntryUpdate = props => {
                 <View style={styles.edit_btn_container}>
                     <TouchableOpacity onPress={updateState}>
                         <View style={styles.edit_btn_wrapper}>
-                            <Text>Edit</Text>
+                            {/* <Text>Edit</Text> */}
+                            <Icon name="edit" type="material" color='blue'/>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -131,7 +132,8 @@ const EntryUpdate = props => {
                 <View style={styles.done_btn_container}>
                     <TouchableOpacity onPress={doneState}>
                         <View style={styles.done_btn_wrapper}>
-                            <Text>Done</Text>
+                            {/* <Text>Done</Text> */}
+                            <Icon name="done-all" type="material" color='green'/>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -139,7 +141,8 @@ const EntryUpdate = props => {
                 <View style={styles.del_btn_container}>
                     <TouchableOpacity onPress={deleteState}>
                         <View style={styles.del_btn_wrapper}>
-                            <Text>Del</Text>
+                            {/* <Text>Del</Text> */}
+                            <Icon name="delete-forever" type="material" color='red'/>
                         </View>
                     </TouchableOpacity>
                 </View>

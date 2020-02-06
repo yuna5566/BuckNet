@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import StateContext from '../Hooks/Context'
+import { Icon } from 'react-native-elements'
 
 const EntryArchieve = props => {
     const stateContext = useContext(StateContext)
@@ -45,14 +46,16 @@ const EntryArchieve = props => {
                 <View style={[styles.del_btn_container, {bottom: 70}]}>
                     <TouchableOpacity onPress={deleteState}>
                         <View style={styles.del_btn_wrapper}>
-                            <Text>Del</Text>
+                            {/* <Text>Del</Text> */}
+                            <Icon name="delete-forever" type="material" color='red'/>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.undo_btn_container}>
                     <TouchableOpacity onPress={undoState}>
                         <View style={styles.undo_btn_wrapper}>
-                            <Text>Undo</Text>
+                            {/* <Text>Undo</Text> */}
+                            <Icon name="undo" type="material" color='cyan'/>
                         </View>
                     </TouchableOpacity>
                 </View>

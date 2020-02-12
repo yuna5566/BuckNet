@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
     View, 
     Text, 
@@ -13,15 +13,27 @@ import {
 import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { HEADER_COLOR } from '../Constants/colors'
 import AsyncStorage from '@react-native-community/async-storage';
+import { API_CALL, ACCESS_TOKEN } from '../Constants/connections';
+import { User } from '../Models/User';
 const backgroundCover = require('../Assets/img/login_bg.jpg')
 
 const Login = props => {
+    const [user, setUser] = useState('');
+    const [pass, setPass] = useState('');
+
+    const inputUserHandler = userData => { setUser(userData); }
+    const inputPassHandler = passData => { setPass(passData); }
+
     const signInWithFacebook = async() => {
         try{
             const successLogin = await LoginManager.logInWithPermissions(["public_profile", "user_gender", "email"]);
+            if (successLogin.isCancelled){
+                throw 'Cancelled';
+            }
             const getToken = await AccessToken.getCurrentAccessToken();
+            console.log("ACCESS TOKEN", getToken);
             const getInfo = new GraphRequest(
-                'me?fields=id,name,email,age_range,gender,birthday,picture.type(large)',
+                'me?fields=id,name,email,gender,birthday,picture.type(large)',
                 { accessToken: getToken.accessToken },
                 (error, result) => {
                     if (error) {
@@ -31,8 +43,8 @@ const Login = props => {
                         const email = ['@email', result.email];
                         const gender = ['@gender', result.gender];
                         const name = ['@name', result.name];
-                        const access = ['@access', 'true'];
-                        const profilePic = ['@profile_pic', result.picture.data.url]
+                        const access = ['@access', getToken.accessToken];
+                        const profilePic = ['@profile_pic', result.picture.data.url];
                         storeUserInfo([email, gender, name, access, profilePic]);
                     }
                 }
@@ -42,18 +54,27 @@ const Login = props => {
             console.log(error)
         }
     }
-
+    
     const storeUserInfo = async (userInfo) => {
         await AsyncStorage.multiSet(userInfo);
         goToHome();
     }
 
-    const goToHome = () => {
-        props.navigation.navigate("Home")
-    }
+    const goToHome = async () => { props.navigation.navigate("Home"); }
 
-    const goToSignUp = () => {
-        props.navigation.navigate('SignUpScreen')
+    const goToSignUp = () => { props.navigation.navigate('SignUpScreen'); }
+
+    const userLogIn = async () => {
+        const client = new User(user, pass);
+        const success = await client.login(API_CALL);
+        if (success.token){
+            const access = ['@access', success.token];
+            console.log(access);
+            storeUserInfo([access]);
+            // goToHome();
+        } else {
+            console.log(success.message);
+        }
     }
 
     return(
@@ -71,6 +92,8 @@ const Login = props => {
                             placeholderTextColor="white"
                             selectionColor="white"
                             underlineColorAndroid='white'
+                            onChangeText={inputUserHandler}
+                            value={user}
                         />
                         <TextInput 
                             placeholder="Password"
@@ -78,14 +101,16 @@ const Login = props => {
                             selectionColor="white"
                             underlineColorAndroid='white'
                             secureTextEntry={true}
+                            onChangeText={inputPassHandler}
+                            value={pass}
                         />
                         <View style={styles.signin_btn_container}>
-                            <TouchableOpacity onPress={goToHome}>
+                            <TouchableOpacity onPress={userLogIn}>
                                 <Text style={styles.btn_text}>Sign In</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.facebook_btn_container}>
-                            <TouchableOpacity onPress={signInWithFacebook}>
+                            <TouchableOpacity onPress={() => {}}>
                                 <Text style={styles.btn_text}>Sign in using Facebook</Text>
                             </TouchableOpacity>
                         </View>

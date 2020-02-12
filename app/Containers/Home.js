@@ -11,7 +11,8 @@ import {
     Button
 } from 'react-native'
 import { HEADER_COLOR } from '../Constants/colors'
-
+import { API_CALL, ACCESS_TOKEN } from '../Constants/connections'
+ 
 import EntryHolder from '../Components/EntryHolder'
 import AddEntryForm from '../Components/AddEntryForm'
 import StateContext from '../Hooks/Context'
@@ -35,6 +36,28 @@ const Home = props => {
         props.navigation.addListener('didFocus', refreshPageHandler)
     }, [])
 
+    const test = async () => {
+        const data =  await fetch(API_CALL + 'entry')
+        const result = await data.json();
+        console.log(result.entries[0]);
+    }
+
+    const getById = async () => {
+        try {
+            const data =  await fetch(API_CALL + 'entry/5e3cd0a0b198cb0ed5717b77', {
+                method: 'get',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + ACCESS_TOKEN
+                })
+            });
+            const result = await data.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    test();
+    // getById();
     console.log("Home rendering...")
     return(
         <SafeAreaView style={styles.container}>

@@ -67,11 +67,11 @@ const Login = props => {
     const userLogIn = async () => {
         const client = new User(user, pass);
         const success = await client.login(API_CALL);
-        if (success.token){
+        if (success.token && success.id){
             const access = ['@access', success.token];
+            const id = ['@id', success.id];
             console.log(access);
-            storeUserInfo([access]);
-            // goToHome();
+            storeUserInfo([id, access]);
         } else {
             console.log(success.message);
         }

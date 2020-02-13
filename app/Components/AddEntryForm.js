@@ -25,7 +25,7 @@ const defaultState = {
     category: "",
     date: "When?",
     privacy: "Private",
-    imageURL: URL_LINK + "water",
+    image: URL_LINK + "water",
     show: false,
     done: false
 }
@@ -73,7 +73,7 @@ const AddEntryForm = props => {
           }).then(image => {
             setEntryState({
                 ...entryState,
-                imageURL: image.path
+                image: image.path
             })
           }).catch(error =>
             console.log("Rejected: ", error)
@@ -97,9 +97,10 @@ const AddEntryForm = props => {
     const getImageFromSplash = async () => {
         setIsLoading(true)
         let imagePathFromSplash = await fetch(URL_LINK).then(response => response.url)
+        console.log(imagePathFromSplash);
         setEntryState({
             ...entryState,
-            imageURL: imagePathFromSplash
+            image: imagePathFromSplash
         })
         setIsLoading(false)
     }
@@ -142,7 +143,7 @@ const AddEntryForm = props => {
                 </TouchableOpacity>
                 {isLoading ? <ActivityIndicator style={{width: "100%", height: "100%"}}/> :
                     <Image
-                        source={{uri: entryState.imageURL}}
+                        source={{uri: entryState.image}}
                         style={{width: "100%", height: "100%"}}
                     />
                 }

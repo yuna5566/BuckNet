@@ -18,7 +18,7 @@ class User {
                 })
             });
             const result = await data.json();
-            console.log("RES", result);
+            // console.log("RES", result);
             return result
         } catch (error) {
             console.log(error);

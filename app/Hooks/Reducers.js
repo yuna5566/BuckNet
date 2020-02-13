@@ -46,7 +46,7 @@ export const reducer = (state, action) => {
 
         case 'initialize_state':
             if(action.payload){
-                state = JSON.parse(action.payload)
+                state.bucketList = action.payload;
             }
             return state
         default:

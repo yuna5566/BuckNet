@@ -81,7 +81,7 @@ const EntryUpdate = props => {
 
     return(
         <SafeAreaView style={styles.container}>
-            <ImageBackground source={{uri: stateEntry.imageURL}} style={styles.imageContainer}>
+            <ImageBackground source={{uri: stateEntry.image}} style={styles.imageContainer}>
                 <View style={styles.contentContainer}>
                     <View style={styles.content_wrapper_1}>
                         <TextInput

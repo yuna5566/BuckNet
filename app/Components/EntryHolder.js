@@ -8,8 +8,8 @@ import {
 } from 'react-native'
 
 const EntryHolder = props => {
-    const {id, name, description, imageURL} = props.entry
-    const [imageAPI, setImage] = useState(imageURL);
+    const {id, name, description, image} = props.entry
+    const [imageAPI, setImage] = useState(image);
     const { navigate, route } = props 
     const toUpdateScreen = () => { 
         let nextScreen = route === "HomeScreen" ? "UpdateScreen" : "EntryAchieveScreen"

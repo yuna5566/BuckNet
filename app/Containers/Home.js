@@ -8,10 +8,12 @@ import {
     StyleSheet,
     FlatList,
     TouchableOpacity,
-    Button
+    Button,
+    AsyncStorage
 } from 'react-native'
 import { HEADER_COLOR } from '../Constants/colors'
-import { API_CALL, ACCESS_TOKEN } from '../Constants/connections'
+import { API_CALL } from '../Constants/connections'
+import { Entry } from '../Models/Entry'
  
 import EntryHolder from '../Components/EntryHolder'
 import AddEntryForm from '../Components/AddEntryForm'
@@ -33,32 +35,20 @@ const Home = props => {
     }, [])
 
     useEffect(() => {
-        props.navigation.addListener('didFocus', refreshPageHandler)
+        getEntries();
+        props.navigation.addListener('didFocus', refreshPageHandler);
     }, [])
 
-    const test = async () => {
-        const data =  await fetch(API_CALL + 'entry')
-        const result = await data.json();
-        console.log(result.entries[0]);
+
+    const getEntries = async () => {
+        const uid = await AsyncStorage.getItem('@id');
+        const access_token = await AsyncStorage.getItem('@access');
+        const payload = await Entry.getEntries(API_CALL, uid, access_token);
+        stateContext.entryDispatch({type: 'initialize_state', payload});
     }
 
-    const getById = async () => {
-        try {
-            const data =  await fetch(API_CALL + 'entry/5e3cd0a0b198cb0ed5717b77', {
-                method: 'get',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + ACCESS_TOKEN
-                })
-            });
-            const result = await data.json();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    test();
-    // getById();
-    console.log("Home rendering...")
+    console.log("Home rendering...");
+    // console.log("STATE: ", stateContext.entryState.bucketList)
     return(
         <SafeAreaView style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent"/>
